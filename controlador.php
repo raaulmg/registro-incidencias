@@ -240,4 +240,15 @@
             </script>";
         }
 
+        public function modificarIncidenciaPrioridad(){
+            $id_incidencia = $_REQUEST["idIncidenciaModPrioridad"];
+            $prioridad = $_REQUEST["prioridad"];
+            $this->incident->updatePrioridad($id_incidencia, $prioridad);
+            echo "<script>
+            window.onload = function(){
+                window.history.back();
+            }
+            </script>";
+        }
+
     }

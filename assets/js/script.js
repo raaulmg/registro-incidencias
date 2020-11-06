@@ -119,3 +119,7 @@ function changeColorIncidencias(){
     changeColor = true;
   }
 }
+
+function mostrarGuardarPrioridad(count){
+  document.getElementById("guardarPrioridad" + count).style.display = "inline";
+}

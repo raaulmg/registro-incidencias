@@ -2,7 +2,7 @@
 if(isset($_SESSION["username"])){header("location: index.php?action=mostrarHome");}
 
 ?>
-<section class="centerVerticalHorizontal">
+<section class="centerVerticalHorizontal" style="text-align:center">
       <h1>Registro Incidencias Informaticas</h1>
       <br>
       <br>

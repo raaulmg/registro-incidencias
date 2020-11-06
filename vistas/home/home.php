@@ -145,7 +145,7 @@ if(!isset($_SESSION["username"])){header("location: index.php?action=cerrarSesio
     
     ";
     if(isset($data["listaIncidencias"]) && count($data["listaIncidencias"]) > 0){
-        $countGuardarEstado = 0;
+        $countIncidencias = 0;
         foreach($data["listaIncidencias"] as $incidencia){
             $id_incidencia = $incidencia->id;
             $fecha_registro = $incidencia->fecha_registro;
@@ -213,28 +213,42 @@ if(!isset($_SESSION["username"])){header("location: index.php?action=cerrarSesio
                         if($_SESSION["tipoRol"] == "administrador"){
                             echo '<form action="index.php">
                             <td style="text-align:right"><strong>Estado: </strong>'.$estado.'
-                                <select style="height:35px; border-radius:3px;" name="estado" onclick="mostrarGuardarEstado('.$countGuardarEstado.')">
+                                <select style="height:35px; border-radius:3px;" name="estado" onclick="mostrarGuardarEstado('.$countIncidencias.')">
                                     <option value="abierta">abierta</option>
                                     <option value="en espera">en espera</option>
                                     <option value="cerrada">cerrada</option>
                                 </select>
                                 <input type="hidden" name="id_incidencia" value='.$id_incidencia.'>
                                 <input type="hidden" name="action" value="modificarEstado">
-                                <input type="submit" value="Guardar" id="guardarEstado'.$countGuardarEstado.'" style="display:none;" class="btn btn-success">
-                            </form>
+                                <input type="submit" value="Guardar" id="guardarEstado'.$countIncidencias.'" style="display:none;" class="btn btn-success">';
+                                echo "
+                                <br>
+                                <br>
+                                <form action='index.php'>
+                                    <strong>Prioridad: </strong> $prioridad
+                                    <select style='height:35px; border-radius:3px;' name='prioridad' onclick='mostrarGuardarPrioridad($countIncidencias)'>
+                                        <option value='maxima'>Maxima</option>
+                                        <option value='media'>Media</option>
+                                        <option value='baja'>Baja</option>
+                                    </select>
+                                    <input type='hidden' name='idIncidenciaModPrioridad' value='$id_incidencia'>
+                                    <button type='submit' name='action' value='modificarIncidenciaPrioridad' id='guardarPrioridad$countIncidencias' style='display:none' class='btn btn-success'>Guardar</button>
+                                </form>";
+                                echo '
+                                </form>
                             </td>'; 
                         }
                         elseif( $estado == "abierta" || $estado == "en espera"){
                         echo '
                         <form action="index.php">
                         <td style="text-align:right"><strong>Estado: </strong>
-                            <select style="height:35px; border-radius:3px;" name="estado" onclick="mostrarGuardarEstado('.$countGuardarEstado.')">
+                            <select style="height:35px; border-radius:3px;" name="estado" onclick="mostrarGuardarEstado('.$countIncidencias.')">
                                 <option value='.$estado.'>'.$estado.'</option>
                                 <option value="cerrada">cerrada</option>
                             </select>
                             <input type="hidden" name="id_incidencia" value='.$id_incidencia.'>
                             <input type="hidden" name="action" value="modificarEstado">
-                            <input type="submit" value="Guardar" id="guardarEstado'.$countGuardarEstado.'" style="display:none;" class="btn btn-success">
+                            <input type="submit" value="Guardar" id="guardarEstado'.$countIncidencias.'" style="display:none;" class="btn btn-success">
                         </form>
                         </td>';
                     }
@@ -247,9 +261,9 @@ if(!isset($_SESSION["username"])){header("location: index.php?action=cerrarSesio
                 <br>";
                 if($_SESSION["tipoRol"] == "administrador"){
                 echo "
-                <a class='btn btn-danger' onclick='mostrarBorrarIncidencia(".$countGuardarEstado.")'>Borrar</a>
+                <a class='btn btn-danger' onclick='mostrarBorrarIncidencia(".$countIncidencias.")'>Borrar</a>
                     <button type='submit' name='action' value='modificarIncidencia' class='btn btn-success'>Modificar</button>
-                    <span style='display:none' id='incidenciaBorrar$countGuardarEstado'>¿Estas segur@ que deseas borrarlo?
+                    <span style='display:none' id='incidenciaBorrar$countIncidencias'>¿Estas segur@ que deseas borrarlo?
                     <button type='submit' class='btn btn-danger' name='action' value='borrarIncidencia'>Si</button>
                     </span>
                 ";
@@ -259,7 +273,7 @@ if(!isset($_SESSION["username"])){header("location: index.php?action=cerrarSesio
     </div>
     </form>
   </main>";
-      $countGuardarEstado++;
+      $countIncidencias++;
     }
     echo "</div>";
     }

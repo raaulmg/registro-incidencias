@@ -161,5 +161,12 @@
 
     public function updateEstado($id_incidencia, $estado){
         $result = ($this->db->query("UPDATE incidencias SET estado = '$estado' WHERE id = '$id_incidencia'"));
+        if($estado == "cerrada"){
+            $this->updatePrioridad($id_incidencia, $estado);
+        }
+    }
+
+    public function updatePrioridad($id_incidencia, $prioridad){
+        $result = ($this->db->query("UPDATE incidencias SET prioridad = '$prioridad' WHERE id = '$id_incidencia'"));
     }
 }
